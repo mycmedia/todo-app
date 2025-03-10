@@ -1,0 +1,35 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+  config:
+    import-check:
+      enabled: false
+  activate:
+    on-profile: dev
+  profiles:
+    active: dev
+
+name: users-service
+server:
+  port: 8081
+  servlet:
+    context-path: /users-service
+  tomcat:
+    access log:
+      enabled: true
+      directory: logs
+      prefix: access_log.
+      suffix: .log
+  datasource:
+    url: jdbc:postgresql://#####
+    username: ###
+    password: ####
+    driver-class-name: org.postgresql.driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
