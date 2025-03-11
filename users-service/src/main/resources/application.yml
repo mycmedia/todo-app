@@ -9,6 +9,20 @@ spring:
     on-profile: dev
   profiles:
     active: dev
+  datasource:
+    url: jdbc:postgresql://ep-tiny-smoke-a5ru3nok.us-east-2.aws.neon.tech/neondb?sslmode=require
+    username: neondb_owner
+    password: npg_sZWfBql5Ne4H
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+
 
 name: users-service
 server:
@@ -21,15 +35,3 @@ server:
       directory: logs
       prefix: access_log.
       suffix: .log
-  datasource:
-    url: jdbc:postgresql://#####
-    username: ###
-    password: ####
-    driver-class-name: org.postgresql.driver
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQL95Dialect

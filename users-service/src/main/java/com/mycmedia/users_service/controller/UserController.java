@@ -4,17 +4,19 @@ package com.mycmedia.users_service.controller;
 import com.mycmedia.users_service.model.User;
 import com.mycmedia.users_service.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping("/")
+    public String getUsers() {
+        return "Hello World";
+    }
 
     @PostMapping("/register")
     public User registerUser(@RequestBody User user) {
