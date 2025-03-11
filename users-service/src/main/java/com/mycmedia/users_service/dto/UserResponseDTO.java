@@ -1,20 +1,12 @@
-package com.mycmedia.users_service.model;
-
-import jakarta.persistence.*;
+package com.mycmedia.users_service.dto;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "users")
-public class User {
+public class UserResponseDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String username;
-    private String password;
     private String email;
     private Integer phone;
     private String role;
@@ -27,13 +19,6 @@ public class User {
     private LocalDateTime updatedAt;
     private LocalDateTime lastLogin;
 
-    public boolean isLocked() {
-        return isLocked;
-    }
-
-    public void setLocked(boolean locked) {
-        isLocked = locked;
-    }
 
     public Long getId() {
         return id;
@@ -49,14 +34,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
@@ -87,8 +64,16 @@ public class User {
         return isActive;
     }
 
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void setIsLocked(boolean isLocked) {
+        this.isLocked = isLocked;
     }
 
     public String getFirstName() {
@@ -138,4 +123,6 @@ public class User {
     public void setLastLogin(LocalDateTime lastLogin) {
         this.lastLogin = lastLogin;
     }
+
+
 }
