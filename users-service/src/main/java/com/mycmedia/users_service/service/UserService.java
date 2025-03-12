@@ -4,8 +4,14 @@ import com.mycmedia.users_service.dto.UserRequestDTO;
 import com.mycmedia.users_service.dto.UserResponseDTO;
 import com.mycmedia.users_service.model.User;
 import com.mycmedia.users_service.repository.UserRepository;
+import com.mycmedia.users_service.utils.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +28,13 @@ public class UserService {
     private UserMapper userMapper;
 
     @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
 
@@ -44,6 +56,17 @@ public class UserService {
             return userMapper.userResponseDTO(userOpt.get());
         }
         throw new RuntimeException("User not found or inactive.");
+    }
+
+    public boolean authenticateUser(String username, String password) {
+        Optional<User> userOpt = userRepository.findByUsername(username);
+
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            return passwordEncoder.matches(password, user.getPassword());
+        }
+
+        return false;
     }
 
     public UserResponseDTO updateUser(Long id, UserRequestDTO userRequestDTO) {
@@ -110,6 +133,21 @@ public class UserService {
         } else {
             throw new RuntimeException("User not found or inactive.");
         }
+    }
+
+
+    public String authenticateAndGenerateToken(String username, String password) {
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new BadCredentialsException("Invalid credentials");
+        }
+
+        // Generate JWT Token
+        return jwtTokenUtil.generateToken(username);
     }
 
 }

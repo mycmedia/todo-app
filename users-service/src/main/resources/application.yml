@@ -9,6 +9,13 @@ spring:
     on-profile: dev
   profiles:
     active: dev
+  logging:
+    level:
+      org:
+        springframework: DEBUG
+        hibernate: INFO
+    file:
+      name: logs/users-service.log
   datasource:
     url: jdbc:postgresql://ep-tiny-smoke-a5ru3nok.us-east-2.aws.neon.tech/neondb?sslmode=require
     username: neondb_owner
@@ -21,8 +28,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-
-
 
 name: users-service
 server:
