@@ -20,8 +20,8 @@ public class UserMapper {
         responseDTO.setEmail(user.getEmail());
         responseDTO.setPhone(user.getPhone());
         responseDTO.setRole(user.getRole());
-        responseDTO.setIsActive(user.isActive());
-        responseDTO.setIsLocked(user.isLocked());
+        responseDTO.setActive(user.isActive());
+        responseDTO.setLocked(user.isLocked());
         responseDTO.setFirstName(user.getFirstName());
         responseDTO.setLastName(user.getLastName());
         responseDTO.setDateOfBirth(user.getDateOfBirth());
